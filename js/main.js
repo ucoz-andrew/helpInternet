@@ -63,11 +63,14 @@ window.___upoll_data = {
 window.uModalWnd = (function(){
 	var app = {
 
-		init: function() {},
+		init: function() {
+			app.result = '';
+		},
 
 		onDomReady: function() {
 			app.restyleRadio('#js-uModalWnd');
-			app.createPoll(___upoll_data);
+			app.pollJSON = window.___upoll_data;
+			app.createPoll(app.pollJSON);
 		},
 
 		restyleRadio: function(parentSelector) {
@@ -81,65 +84,77 @@ window.uModalWnd = (function(){
 
 		createPoll: function(pollObj) {
 			app.currStep = 0;
-			var currQuestion, questionBuffer, allQuestions = '', pollSteps = '';
-			$('.uModalWnd__info').html(pollObj.poll.poll_name);
-			// app.pollSteps = pollObj.poll.poll_questions.length;
-			// for (var i = 0; i < app.pollSteps; i += 1 ) {
-			// 	currQuestion = pollObj.poll.poll_questions[i];
-			// 	questionBuffer = $('<div/>', {
-			// 		'class': 'uModalWnd__question-wrap uModalWnd__content',
-			// 	}).append($('<div/>', {
-			// 		'class': 'uModalWnd__question',
-			// 		'data-id': currQuestion.id
-			// 	}));
-			// 	var answers = $('<ul/>', {
-			// 		'class': 'uModalWnd__answers'
-			// 	});
-			// 	for (var j = 0, aLen = currQuestion.answers.length; j < aLen; j += 1) {
-			// 		$('<li/>').append($('<label/>', {
-			// 			'text': currQuestion.answers[j].text
-			// 		}).append('<input/>', {
-			// 			'type': 'radio',
-			// 			'name': 'uModalWnd__answer__' + currQuestion.id
-			// 		}).append($('<i/>', {
-			// 			'class': 'fake-radio'
-			// 		}))).appendTo(answers);
-			// 	}
-			// }
+			var currQuestion, questionBuffer, allQuestions = '', pollSteps = '', buttonText = 'Дальше';
 
-			app.pollSteps = pollObj.poll.poll_questions.length;
-			for (var i = 0; i < app.pollSteps; i += 1 ) {
+			$('.uModalWnd__info').html(pollObj.poll.poll_name);
+
+			app.pollStepsLength = pollObj.poll.poll_questions.length;
+			for (var i = 0; i < app.pollStepsLength; i += 1 ) {
 				currQuestion = pollObj.poll.poll_questions[i];
 				questionBuffer = '';
 				var answerVariants = '';
 				for (var j = 0, aLen = currQuestion.answers.length; j < aLen; j += 1) {
-					answerVariants += '<li><label><input type="radio" name="uModalWnd__answer__' + currQuestion.id + '" /><i class="fake-radio"></i>' + currQuestion.answers[j].text + '</label></li>';
+					answerVariants += '<li><label><input type="radio" name="uModalWnd__answer__' + currQuestion.id + '" value="' + currQuestion.answers[j].id + '" /><i class="fake-radio"></i>' + currQuestion.answers[j].text + '</label></li>';
 				}
 				questionBuffer = '<div class="uModalWnd__question">' + currQuestion.text + '</div> <ul class="uModalWnd__answers">' + answerVariants + '</ul>';
-				questionBuffer += '<div class="uModalWnd__submit-wrap"><button class="uModalWnd__submit">' + 'Отправить' + '</button></div>';
+				buttonText = (i === (app.pollStepsLength - 1)) ? 'Отправить' : buttonText;
+				questionBuffer += '<div class="uModalWnd__submit-wrap"><button class="uModalWnd__submit">' + buttonText + '</button></div>';
 				questionBuffer = '<div class="uModalWnd__question-wrap uModalWnd__content" style="display: none;">' + questionBuffer + '</div>';
 				allQuestions = allQuestions + questionBuffer;
 
-				pollSteps = pollSteps + '<li class="uModalWnd__step" style="width: ' + 100/app.pollSteps + '%;"></li>';
+				pollSteps = pollSteps + '<li class="uModalWnd__step" style="width: ' + 100/app.pollStepsLength + '%;"></li>';
 			}
 			pollSteps = '<ul id="js-uModalWnd__steps" class="uModalWnd__steps">' + pollSteps + '</ul>';
 			app.allQuestions = $(allQuestions);
 			app.pollSteps = $(pollSteps);
 			$('#js-uModalWnd__body').append(app.allQuestions).append(app.pollSteps);
 
+			app.addEventListeners();
 			app.nextStep();
 		},
 
+		addEventListeners: function() {
+			app.allQuestions.find('.uModalWnd__submit').click(function(e) {
+				if (app.addStepToResult(app.currStep)) {
+					app.nextStep();
+				}
+				else {}
+			});
+			$('#js-uModalWnd__close').click(function(e) {});
+		},
+
+		addStepToResult: function() {
+			var stepResult = app.currStep + '=', comma = '';
+			var selected = app.allQuestions.find('[name=uModalWnd__answer__' + app.currStep + ']:checked');
+			if (selected.length) {
+				selected.each(function(i) {
+					comma = (i > 0) ? ',' : '';
+					stepResult = stepResult + comma + $(this).val();
+				});
+				app.result = (app.result === '') ? (app.result + stepResult) : (app.result + ';' + stepResult);
+				return true;
+			}
+		},
+
 		nextStep: function() {
-			app.pollSteps.find('li').removeClass('uModalWnd__step--current').eq(app.currStep).addClass('uModalWnd__step--current');
-			app.allQuestions.hide().eq(app.currStep).fadeIn();
-			app.currStep += 1;
-		}
+			if (app.currStep === app.pollStepsLength) {
+				console.log('sending...', app.result);
+				app.sendResult(app.result);
+			}
+			else {
+				app.pollSteps.find('li').removeClass('uModalWnd__step--current').eq(app.currStep).addClass('uModalWnd__step--current');
+				app.allQuestions.hide().eq(app.currStep).fadeIn();
+				app.currStep += 1;
+			}
+		},
+
+		sendResult: function(result) {}
 
 	};
 	return {
 		init: app.init,
-		onDomReady: app.onDomReady
+		onDomReady: app.onDomReady,
+		step: app.nextStep
 	}
 }());
 
