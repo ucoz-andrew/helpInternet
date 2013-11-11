@@ -172,7 +172,7 @@ window.uModalWnd = (function(){
 
 			app.allQuestions.find('input[type=radio]').change(function() {
 				console.log('test');
-		        if($(this).prop('checked')) {
+		        if($(this).is(':checked')) {
 		        	$(this).parents('li').siblings().find('input').removeClass('checked');
 		            $(this).addClass('checked');
 		        }
