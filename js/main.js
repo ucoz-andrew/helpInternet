@@ -189,7 +189,7 @@ window.uModalWnd = (function(){
 			else {
 				app.pollSteps.find('li').removeClass('uModalWnd__step--current').eq(app.currStep).addClass('uModalWnd__step--current');
 				app.allQuestions.hide().eq(app.currStep).fadeIn('fast', function() {
-					$(parent).find('iframe').height($('body').outerHeight());
+					$(window.parent.document).find('iframe').height($('body').outerHeight());
 				});
 				app.currStep += 1;
 			}
