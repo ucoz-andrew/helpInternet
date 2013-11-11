@@ -130,7 +130,7 @@ img {vertical-align: middle;}
 	background: url(./../img/uModalWnd__info.png) no-repeat right center;
 }
 .uModalWnd__question-wrap {
-	min-height: 190px;
+	min-height: 150px;
 	padding-top: 10px;
 }
 .uModalWnd__question {
