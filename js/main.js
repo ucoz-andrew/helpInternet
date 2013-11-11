@@ -166,7 +166,12 @@ window.uModalWnd = (function(){
 					root.find('.uModalWnd__fs-val').text($(this).text());
 				}
 			});
-			$('#js-uModalWnd__close').click(function(e) {});
+			$('#js-uModalWnd__close').click(function(e) {
+				app.sendResult(app.result);
+				$('#js-uModalWnd').fadeOut('fast', function() {
+					$(window.parent.document).find('#uModalWnd-iframe').remove();
+				});
+			});
 		},
 
 		addStepToResult: function() {
@@ -191,7 +196,7 @@ window.uModalWnd = (function(){
 			else {
 				app.pollSteps.find('li').removeClass('uModalWnd__step--current').eq(app.currStep).addClass('uModalWnd__step--current');
 				app.allQuestions.hide().eq(app.currStep).fadeIn('fast', function() {
-					$(window.parent.document).find('iframe').height($('body').outerHeight());
+					$(window.parent.document).find('#uModalWnd-iframe').height($('body').outerHeight());
 				});
 				app.currStep += 1;
 			}
