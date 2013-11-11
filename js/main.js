@@ -1,83 +1,83 @@
 window.___upoll_data = {
-    "request": {
-        "user_ref": null,
-        "site_lang": null,
-        "site_id": "1",
-        "site_page": null,
-        "sig": "true",
-        "poll_id": "1",
-        "user_age": null,
-        "user_status": null
-    },
-    "requests_count": 37,
-    "poll": {
-        "poll_id": "1",
-        "poll_lang": "ru",
-        "poll_name": "Our super poll",
-        "poll_questions": [{
-            "text": "Укажите тематику этого сайта:",
-            "id": 1,
-            "type": "select",
-            "sign": "Выберите тематику",
-            "answers": [{
-                "text": "Автомобили",
-                "id": 1
-            }, {
-                "text": "Супер пупер длинное название",
-                "id": 2
-            }, {
-                "text": "Спорт",
-                "id": 3
-            }, {
-                "text": "Еда",
-                "id": 4
-            }, {
-                "text": "Дизайн",
-                "id": 5
-            }]
-        }, {
-            "text": "How are you?",
-            "id": 2,
-            "answers": [{
-                "text": "Fine, thanks",
-                "id": 1
-            }, {
-                "text": "Could be better",
-                "id": 2
-            }, {
-                "text": "Bad :(",
-                "id": 3
-            }]
-        }, {
-            "text": "Are you sure?",
-            "id": 3,
-            "answers": [{
-                "text": "Yes",
-                "id": 1
-            }, {
-                "text": "No",
-                "id": 2
-            }, {
-                "text": "WAT?",
-                "id": 3
-            }]
-        }, {
-            "text": "Do you like cats?",
-            "id": 4,
-            "answers": [{
-                "text": "Yes",
-                "id": 1
-            }, {
-                "text": "No",
-                "id": 2
-            }, {
-                "text": "Not sure",
-                "id": 3
-            }]
-        }],
-        "poll_descr": "Please, take this poll",
-        "poll_config": {}
-    }
+	"request": {
+		"user_ref": null,
+		"site_lang": null,
+		"site_id": "1",
+		"site_page": null,
+		"sig": "true",
+		"poll_id": "1",
+		"user_age": null,
+		"user_status": null
+	},
+	"requests_count": 37,
+	"poll": {
+		"poll_id": "1",
+		"poll_lang": "ru",
+		"poll_name": "Our super poll",
+		"poll_questions": [{
+			"text": "Укажите тематику этого сайта:",
+			"id": 1,
+			"type": "select",
+			"sign": "Выберите тематику",
+			"answers": [{
+				"text": "Автомобили",
+				"id": 1
+			}, {
+				"text": "Супер пупер длинное название",
+				"id": 2
+			}, {
+				"text": "Спорт",
+				"id": 3
+			}, {
+				"text": "Еда",
+				"id": 4
+			}, {
+				"text": "Дизайн",
+				"id": 5
+			}]
+		}, {
+			"text": "How are you?",
+			"id": 2,
+			"answers": [{
+				"text": "Fine, thanks",
+				"id": 1
+			}, {
+				"text": "Could be better",
+				"id": 2
+			}, {
+				"text": "Bad :(",
+				"id": 3
+			}]
+		}, {
+			"text": "Are you sure?",
+			"id": 3,
+			"answers": [{
+				"text": "Yes",
+				"id": 1
+			}, {
+				"text": "No",
+				"id": 2
+			}, {
+				"text": "WAT?",
+				"id": 3
+			}]
+		}, {
+			"text": "Do you like cats?",
+			"id": 4,
+			"answers": [{
+				"text": "Yes",
+				"id": 1
+			}, {
+				"text": "No",
+				"id": 2
+			}, {
+				"text": "Not sure",
+				"id": 3
+			}]
+		}],
+		"poll_descr": "Please, take this poll",
+		"poll_config": {}
+	}
 };
 
 
@@ -172,14 +172,14 @@ window.uModalWnd = (function(){
 
 			app.allQuestions.find('input[type=radio]').change(function() {
 				console.log('test');
-		        if($(this).prop('checked')) {
-		        	$(this).parents('li').siblings().find('input').removeClass('checked');
-		            $(this).addClass('checked');
-		        }
-		        else {
-		            $(this).removeClass('checked');
-		        }
-		    });
+				if($(this).prop('checked')) {
+					$(this).parents('li').siblings().find('input').removeClass('checked');
+					$(this).addClass('checked');
+				}
+				else {
+					$(this).removeClass('checked');
+				}
+			});
 		},
 
 		addStepToResult: function() {
