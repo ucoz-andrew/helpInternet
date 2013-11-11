@@ -129,8 +129,6 @@ window.uModalWnd = (function(){
 				}
 				
 				questionBuffer = '<div class="uModalWnd__question">' + currQuestion.text + '</div>' + questionBuffer;
-				buttonText = (i === (app.pollStepsLength - 1)) ? 'Отправить' : buttonText; // TODO сделать только одну кнопку на весь опрос
-				questionBuffer += '<div class="uModalWnd__submit-wrap"><button class="uModalWnd__submit">' + buttonText + '</button></div>';
 				questionBuffer = '<div class="uModalWnd__question-wrap uModalWnd__content" style="display: none;">' + questionBuffer + '</div>';
 				allQuestions = allQuestions + questionBuffer;
 
@@ -138,9 +136,10 @@ window.uModalWnd = (function(){
 			}
 
 			pollSteps = '<ul id="js-uModalWnd__steps" class="uModalWnd__steps">' + pollSteps + '</ul>';
+			app.btn = $('<div class="uModalWnd__submit-wrap uModalWnd__content"><button class="uModalWnd__submit">' + buttonText + '</button></div>');
 			app.allQuestions = $(allQuestions);
 			app.pollSteps = $(pollSteps);
-			$('#js-uModalWnd__body').append(app.allQuestions).append(app.pollSteps);
+			$('#js-uModalWnd__body').append(app.allQuestions).append(app.btn).append(app.pollSteps);
 
 			app.createSelectFormRadio('js-uModalWnd__answers--select');
 			app.addEventListeners();
@@ -148,7 +147,7 @@ window.uModalWnd = (function(){
 		},
 
 		addEventListeners: function() {
-			app.allQuestions.find('.uModalWnd__submit').click(function(e) {
+			app.btn.find('.uModalWnd__submit').click(function(e) {
 				if (app.addStepToResult(app.currStep)) {
 					app.nextStep();
 				}
@@ -183,6 +182,9 @@ window.uModalWnd = (function(){
 		},
 
 		nextStep: function() {
+			if (app.currStep === app.pollStepsLength - 1) {
+				app.btn.find('.uModalWnd__submit').text('Отправить');
+			}
 			if (app.currStep === app.pollStepsLength) {
 				app.sendResult(app.result);
 			}
@@ -219,8 +221,7 @@ window.uModalWnd = (function(){
 	};
 	return {
 		init: app.init,
-		onDomReady: app.onDomReady,
-		ser: app.serializeResult
+		onDomReady: app.onDomReady
 	}
 }());
 
