@@ -141,7 +141,6 @@ window.uModalWnd = (function(){
 			app.pollSteps = $(pollSteps);
 			$('#js-uModalWnd__body').append(app.allQuestions).append(app.btn).append(app.pollSteps);
 
-			app.createSelectFormRadio('js-uModalWnd__answers--select');
 			app.addEventListeners();
 			app.nextStep();
 		},
