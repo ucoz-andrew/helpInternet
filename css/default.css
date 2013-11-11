@@ -326,7 +326,7 @@ img {vertical-align: middle;}
 .uModalWnd__answers input[type=radio] + .fake-radio:hover, .uModalWnd__answers label:hover .fake-radio {
 	background: #d3effa;
 }
-.uModalWnd__answers input[type=radio]:checked + .fake-radio {
+.uModalWnd__answers input[type=radio].checked + .fake-radio {
 	background: #3bafda !important;
 }
 /*------------*/

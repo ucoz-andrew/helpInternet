@@ -169,6 +169,17 @@ window.uModalWnd = (function(){
 				app.sendResult(app.result);
 				app.closeWindow();
 			});
+
+			app.allQuestions.find('input[type=radio]').change(function() {
+				console.log('test');
+		        if($(this).prop('checked')) {
+		        	$(this).parents('li').siblings().find('input').removeClass('checked');
+		            $(this).addClass('checked');
+		        }
+		        else {
+		            $(this).removeClass('checked');
+		        }
+		    });
 		},
 
 		addStepToResult: function() {
@@ -221,7 +232,7 @@ window.uModalWnd = (function(){
 
 		closeWindow: function() {
 			$('#js-uModalWnd').fadeOut('fast', function() {
-				$(window.parent.document).find('#uModalWnd-iframe').remove();
+				$(window.parent.document).find('#uModalWnd-iframe').hide();
 			});
 		}
 
