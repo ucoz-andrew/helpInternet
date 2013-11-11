@@ -148,6 +148,90 @@ img {vertical-align: middle;}
 .uModalWnd__answers li:first-child {
 	margin-top: 0;
 }
+
+.uModalWnd__fake-select-wrap {
+	position: relative;
+	display: inline-block;
+	min-width: 260px;
+	margin: 15px 0 10px;
+	background: #3bafda;
+	border-radius: 5px;
+	color: #fff;
+	z-index: 2;
+}
+.uModalWnd__fs-val {
+	position: relative;
+	z-index: 2;
+	display: block;
+	padding: 0 45px 0 10px;
+	color: #fff;
+	font-size: 0.875em;
+	line-height: 2.857;
+	font-weight: 600;
+	text-transform: uppercase;
+	cursor: pointer;
+	border-radius: 5px;
+	background: #3bafda;
+}
+.uModalWnd__fs-val:after {
+	position: absolute;
+	display: block;
+	content: "";
+	width: 18px;
+	height: 10px;
+	right: 10px;
+	top: 50%;
+	margin-top: -5px;
+	background: url(./../img/uModalWnd__select-arrow.png);
+}
+.uModalWnd__answers--select {
+	position: absolute;
+	width: 100%;
+	top: 100%;
+	margin: -4px 0 0;
+	padding: 4px 0 0 0;
+	max-height: 139px;
+	background: #f3f3f3;
+	border-radius: 0 0 5px 5px;
+	overflow: auto;
+	display: none;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+	-webkit-transition: all .25s .05s ease-out;
+	   -moz-transition: all .25s .05s ease-out;
+	     -o-transition: all .25s .05s ease-out;
+	        transition: all .25s .05s ease-out;
+}
+.uModalWnd__fs-opened .uModalWnd__answers--select {
+	display: block;
+}
+.uModalWnd__answers--select li {
+	margin: 0;
+}
+.uModalWnd__answers--select label {
+	display: block;
+	margin: 0;
+	padding: 5px 10px;
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #666;
+	font-size: 0.929em;
+	border-top: 1px solid #e1e1e1;
+}
+.uModalWnd__answers--select li:first-child label {
+	border-top: 0;
+}
+.fs-option-active label {
+	cursor: default;
+	background: #e7e7e7;
+}
+.uModalWnd__answers--select label:hover {
+	background: #e7e7e7;
+}
+
 .uModalWnd__submit-wrap {
 	text-align: right;
 }
@@ -170,10 +254,12 @@ img {vertical-align: middle;}
 }
 .uModalWnd__step:first-child {
 	border-left: 0;
-	border-radius: 3px 0 0 3px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 .uModalWnd__step:last-child {
-	border-radius: 0 3px 3px 0;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
 .uModalWnd__step--current {
 	background: #99d459;
@@ -188,7 +274,7 @@ img {vertical-align: middle;}
 	padding: 0 20px;
 	font-size: .875em;
 	line-height: 2.857;
-	font-weight: bold;
+	font-weight: 600;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;

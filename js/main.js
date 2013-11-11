@@ -15,8 +15,29 @@ window.___upoll_data = {
         "poll_lang": "ru",
         "poll_name": "Our super poll",
         "poll_questions": [{
-            "text": "How are you?",
+            "text": "Укажите тематику этого сайта:",
             "id": 1,
+            "type": "select",
+            "sign": "Выберите тематику",
+            "answers": [{
+                "text": "Автомобили",
+                "id": 1
+            }, {
+                "text": "Супер пупер длинное название",
+                "id": 2
+            }, {
+                "text": "Спорт",
+                "id": 3
+            }, {
+                "text": "Еда",
+                "id": 4
+            }, {
+                "text": "Дизайн",
+                "id": 5
+            }]
+        }, {
+            "text": "How are you?",
+            "id": 2,
             "answers": [{
                 "text": "Fine, thanks",
                 "id": 1
@@ -29,7 +50,7 @@ window.___upoll_data = {
             }]
         }, {
             "text": "Are you sure?",
-            "id": 2,
+            "id": 3,
             "answers": [{
                 "text": "Yes",
                 "id": 1
@@ -42,7 +63,7 @@ window.___upoll_data = {
             }]
         }, {
             "text": "Do you like cats?",
-            "id": 3,
+            "id": 4,
             "answers": [{
                 "text": "Yes",
                 "id": 1
@@ -64,7 +85,7 @@ window.uModalWnd = (function(){
 	var app = {
 
 		init: function() {
-			app.result = '';
+			app.result = [];
 		},
 
 		onDomReady: function() {
@@ -84,31 +105,44 @@ window.uModalWnd = (function(){
 
 		createPoll: function(pollObj) {
 			app.currStep = 0;
-			var currQuestion, questionBuffer, allQuestions = '', pollSteps = '', buttonText = 'Дальше';
+			var isSelect, currQuestion, questionBuffer, catsBuffer, allQuestions = '', pollSteps = '', buttonText = 'Дальше';
 
 			$('.uModalWnd__info').html(pollObj.poll.poll_name);
 
 			app.pollStepsLength = pollObj.poll.poll_questions.length;
-			for (var i = 0; i < app.pollStepsLength; i += 1 ) {
+			for (var i = 0; i < app.pollStepsLength; i += 1) {
 				currQuestion = pollObj.poll.poll_questions[i];
 				questionBuffer = '';
-				var answerVariants = '';
-				for (var j = 0, aLen = currQuestion.answers.length; j < aLen; j += 1) {
-					answerVariants += '<li><label><input type="radio" name="uModalWnd__answer__' + currQuestion.id + '" value="' + currQuestion.answers[j].id + '" /><i class="fake-radio"></i>' + currQuestion.answers[j].text + '</label></li>';
+				var answerVariants = '', curVariant = '';
+				if (currQuestion.type === 'select') {
+					for (var j = 0, aLen = currQuestion.answers.length; j < aLen; j += 1) {
+						answerVariants += '<li><label><input type="radio" name="uModalWnd__answer__' + currQuestion.id + '" value="' + currQuestion.answers[j].id + '" />' + currQuestion.answers[j].text + '</label></li>';
+					}
+					questionBuffer = '<ul class="uModalWnd__answers uModalWnd__answers--select">' + answerVariants + '</ul>';
+					questionBuffer = '<div class="uModalWnd__fake-select-wrap js-uModalWnd__fake-select"><span class="uModalWnd__fs-val">' + currQuestion.sign + '</span>' + questionBuffer + '</div>';
 				}
-				questionBuffer = '<div class="uModalWnd__question">' + currQuestion.text + '</div> <ul class="uModalWnd__answers">' + answerVariants + '</ul>';
-				buttonText = (i === (app.pollStepsLength - 1)) ? 'Отправить' : buttonText;
+				else {
+					for (var j = 0, aLen = currQuestion.answers.length; j < aLen; j += 1) {
+						answerVariants += '<li><label><input type="radio" name="uModalWnd__answer__' + currQuestion.id + '" value="' + currQuestion.answers[j].id + '" /><i class="fake-radio"></i>' + currQuestion.answers[j].text + '</label></li>';
+					}
+					questionBuffer = '<ul class="uModalWnd__answers">' + answerVariants + '</ul>';
+				}
+				
+				questionBuffer = '<div class="uModalWnd__question">' + currQuestion.text + '</div>' + questionBuffer;
+				buttonText = (i === (app.pollStepsLength - 1)) ? 'Отправить' : buttonText; // TODO сделать только одну кнопку на весь опрос
 				questionBuffer += '<div class="uModalWnd__submit-wrap"><button class="uModalWnd__submit">' + buttonText + '</button></div>';
 				questionBuffer = '<div class="uModalWnd__question-wrap uModalWnd__content" style="display: none;">' + questionBuffer + '</div>';
 				allQuestions = allQuestions + questionBuffer;
 
 				pollSteps = pollSteps + '<li class="uModalWnd__step" style="width: ' + 100/app.pollStepsLength + '%;"></li>';
 			}
+
 			pollSteps = '<ul id="js-uModalWnd__steps" class="uModalWnd__steps">' + pollSteps + '</ul>';
 			app.allQuestions = $(allQuestions);
 			app.pollSteps = $(pollSteps);
 			$('#js-uModalWnd__body').append(app.allQuestions).append(app.pollSteps);
 
+			app.createSelectFormRadio('js-uModalWnd__answers--select');
 			app.addEventListeners();
 			app.nextStep();
 		},
@@ -120,25 +154,36 @@ window.uModalWnd = (function(){
 				}
 				else {}
 			});
+			var fakeSelect = app.allQuestions.find('.js-uModalWnd__fake-select');
+			fakeSelect.find('.uModalWnd__fs-val').click(function(e) {
+				$(this).parent().toggleClass('uModalWnd__fs-opened');
+			});
+			fakeSelect.find('label').click(function(e) {
+				if (!$(this).parent().hasClass('fs-option-active')) {
+					var root = $(this).parents('.js-uModalWnd__fake-select');
+					$(this).parent().siblings('li').removeClass('fs-option-active');
+					$(this).parent().addClass('fs-option-active');
+					root.removeClass('uModalWnd__fs-opened');
+					root.find('.uModalWnd__fs-val').text($(this).text());
+				}
+			});
 			$('#js-uModalWnd__close').click(function(e) {});
 		},
 
 		addStepToResult: function() {
-			var stepResult = app.currStep + '=', comma = '';
-			var selected = app.allQuestions.find('[name=uModalWnd__answer__' + app.currStep + ']:checked');
-			if (selected.length) {
+			var stepResult = [], comma = '';
+			var selected = app.allQuestions.find('[name=uModalWnd__answer__' + app.pollJSON.poll.poll_questions[app.currStep - 1].id + ']:checked');
+			if (selected.length && !(app.sending)) {
 				selected.each(function(i) {
-					comma = (i > 0) ? ',' : '';
-					stepResult = stepResult + comma + $(this).val();
+					stepResult.push($(this).val());
 				});
-				app.result = (app.result === '') ? (app.result + stepResult) : (app.result + ';' + stepResult);
+				app.result.push(stepResult);
 				return true;
 			}
 		},
 
 		nextStep: function() {
 			if (app.currStep === app.pollStepsLength) {
-				console.log('sending...', app.result);
 				app.sendResult(app.result);
 			}
 			else {
@@ -148,13 +193,32 @@ window.uModalWnd = (function(){
 			}
 		},
 
-		sendResult: function(result) {}
+		serializeResult: function(result) {
+			var newResult = '';
+			for (var i = 0, len = result.length; i < len; i += 1) {
+				newResult = newResult + (i + 1) + '=';
+				for (var iStep = 0, lenStep = result[i].length; iStep < lenStep; iStep += 1) {
+					newResult = newResult + result[i][iStep];
+					newResult += (iStep !== (lenStep - 1)) ? ',' : '';
+				}
+				newResult += (i !== (len - 1)) ? ';' : '';
+			}
+			return newResult;
+		},
+
+		sendResult: function(result) {
+			app.sending = true;
+			var result = app.serializeResult(app.result);
+			console.log('sending...', result);
+		},
+
+		createSelectFormRadio: function(selector) {}
 
 	};
 	return {
 		init: app.init,
 		onDomReady: app.onDomReady,
-		step: app.nextStep
+		ser: app.serializeResult
 	}
 }());
 
