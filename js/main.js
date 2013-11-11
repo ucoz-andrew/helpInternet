@@ -168,9 +168,7 @@ window.uModalWnd = (function(){
 			});
 			$('#js-uModalWnd__close').click(function(e) {
 				app.sendResult(app.result);
-				$('#js-uModalWnd').fadeOut('fast', function() {
-					$(window.parent.document).find('#uModalWnd-iframe').remove();
-				});
+				app.closeWindow();
 			});
 		},
 
@@ -192,6 +190,7 @@ window.uModalWnd = (function(){
 			}
 			if (app.currStep === app.pollStepsLength) {
 				app.sendResult(app.result);
+				app.closeWindow();
 			}
 			else {
 				app.pollSteps.find('li').removeClass('uModalWnd__step--current').eq(app.currStep).addClass('uModalWnd__step--current');
@@ -221,7 +220,11 @@ window.uModalWnd = (function(){
 			console.log('sending...', result);
 		},
 
-		createSelectFormRadio: function(selector) {}
+		closeWindow: function() {
+			$('#js-uModalWnd').fadeOut('fast', function() {
+				$(window.parent.document).find('#uModalWnd-iframe').remove();
+			});
+		}
 
 	};
 	return {
