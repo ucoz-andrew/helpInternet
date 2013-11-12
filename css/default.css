@@ -55,6 +55,7 @@ body {
 	font: 1em/1.571 'Open Sans', sans-serif;
 	color: #3d3d3d;
 	background: transparent;
+	overflow: hidden;
 }
 a {}
 a:hover {}
@@ -64,6 +65,7 @@ img {vertical-align: middle;}
 
 .uModalWnd {
 	padding: 5px;
+	filter: alpha(opacity=10);
 }
 .uModalWnd__content {
 	padding: 0 20px;
@@ -191,7 +193,7 @@ img {vertical-align: middle;}
 	top: 100%;
 	margin: -4px 0 0;
 	padding: 4px 0 0 0;
-	max-height: 139px;
+	max-height: 141px;
 	background: #f3f3f3;
 	border-radius: 0 0 5px 5px;
 	overflow: auto;

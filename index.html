@@ -5,7 +5,55 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<!--<script type="text/javascript" src="./js/main.js"></script>-->
 </head>
-<body style="background: url(https://twimg0-a.akamaihd.net/profile_background_images/378800000108493906/f13ca15c55bd69de1d50bee629f07da7.jpeg) no-repeat center top;">
-<iframe id='uModalWnd-iframe' src="./window.html" frameborder="0" style="position: fixed;right: 0;bottom: 0;width: 603px;height: 390px;overflow: hidden;-webkit-transition: height .25s .05s ease-out;-moz-transition: height .25s .05s ease-out;-o-transition: height .25s .05s ease-out;transition: height .25s .05s ease-out;"></iframe>
+<body style="background: url(https://twimg0-a.akamaihd.net/profile_background_images/378800000108493906/f13ca15c55bd69de1d50bee629f07da7.jpeg) center top;color: #fff;background-size: cover;">
+<style>
+	p {
+		width: 500px;
+		text-align: justify;
+		font-family: 'Arial';
+	}
+</style>
+<script>
+	if (document.documentMode === 5) {
+		var posIframe = function (body, iframe) {
+			var val = body.outerHeight() + body.scrollTop() - iframe.outerHeight();
+			iframe.css('top', val + 'px');
+		};
+	}
+	$(function() {
+		if (document.documentMode === 5) {
+			var $body = $('body'), $iframe = $('#uModalWnd-iframe');
+			$(window).bind('load scroll resize', function () {
+				posIframe($body, $iframe);
+			});
+			$iframe.load(function() {
+				posIframe($body, $iframe);
+			});
+		}
+	});
+</script>
+<h1>Super site</h1>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, recusandae mollitia qui laudantium illum corrupti quidem provident necessitatibus soluta quo eos repudiandae? Molestias, ea, eveniet nihil tempora quidem quis dolorem excepturi nemo aliquam quasi cupiditate provident dolores delectus ullam minus quam exercitationem quod ducimus molestiae optio soluta maxime blanditiis! Tenetur, reprehenderit, animi, quasi eum dignissimos vel beatae quaerat placeat maxime rem sint cumque temporibus vero neque amet nostrum iste ad autem enim incidunt optio dolore quis eius fugit excepturi? Minus, aliquid, obcaecati, facilis, iste facere tempora recusandae voluptatem laboriosam maxime eligendi id explicabo neque expedita iure fuga. Cum, pariatur, laborum!
+</p>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, recusandae mollitia qui laudantium illum corrupti quidem provident necessitatibus soluta quo eos repudiandae? Molestias, ea, eveniet nihil tempora quidem quis dolorem excepturi nemo aliquam quasi cupiditate provident dolores delectus ullam minus quam exercitationem quod ducimus molestiae optio soluta maxime blanditiis! Tenetur, reprehenderit, animi, quasi eum dignissimos vel beatae quaerat placeat maxime rem sint cumque temporibus vero neque amet nostrum iste ad autem enim incidunt optio dolore quis eius fugit excepturi? Minus, aliquid, obcaecati, facilis, iste facere tempora recusandae voluptatem laboriosam maxime eligendi id explicabo neque expedita iure fuga. Cum, pariatur, laborum!
+</p>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, recusandae mollitia qui laudantium illum corrupti quidem provident necessitatibus soluta quo eos repudiandae? Molestias, ea, eveniet nihil tempora quidem quis dolorem excepturi nemo aliquam quasi cupiditate provident dolores delectus ullam minus quam exercitationem quod ducimus molestiae optio soluta maxime blanditiis! Tenetur, reprehenderit, animi, quasi eum dignissimos vel beatae quaerat placeat maxime rem sint cumque temporibus vero neque amet nostrum iste ad autem enim incidunt optio dolore quis eius fugit excepturi? Minus, aliquid, obcaecati, facilis, iste facere tempora recusandae voluptatem laboriosam maxime eligendi id explicabo neque expedita iure fuga. Cum, pariatur, laborum!
+</p>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, recusandae mollitia qui laudantium illum corrupti quidem provident necessitatibus soluta quo eos repudiandae? Molestias, ea, eveniet nihil tempora quidem quis dolorem excepturi nemo aliquam quasi cupiditate provident dolores delectus ullam minus quam exercitationem quod ducimus molestiae optio soluta maxime blanditiis! Tenetur, reprehenderit, animi, quasi eum dignissimos vel beatae quaerat placeat maxime rem sint cumque temporibus vero neque amet nostrum iste ad autem enim incidunt optio dolore quis eius fugit excepturi? Minus, aliquid, obcaecati, facilis, iste facere tempora recusandae voluptatem laboriosam maxime eligendi id explicabo neque expedita iure fuga. Cum, pariatur, laborum!
+</p>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, recusandae mollitia qui laudantium illum corrupti quidem provident necessitatibus soluta quo eos repudiandae? Molestias, ea, eveniet nihil tempora quidem quis dolorem excepturi nemo aliquam quasi cupiditate provident dolores delectus ullam minus quam exercitationem quod ducimus molestiae optio soluta maxime blanditiis! Tenetur, reprehenderit, animi, quasi eum dignissimos vel beatae quaerat placeat maxime rem sint cumque temporibus vero neque amet nostrum iste ad autem enim incidunt optio dolore quis eius fugit excepturi? Minus, aliquid, obcaecati, facilis, iste facere tempora recusandae voluptatem laboriosam maxime eligendi id explicabo neque expedita iure fuga. Cum, pariatur, laborum!
+</p>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, recusandae mollitia qui laudantium illum corrupti quidem provident necessitatibus soluta quo eos repudiandae? Molestias, ea, eveniet nihil tempora quidem quis dolorem excepturi nemo aliquam quasi cupiditate provident dolores delectus ullam minus quam exercitationem quod ducimus molestiae optio soluta maxime blanditiis! Tenetur, reprehenderit, animi, quasi eum dignissimos vel beatae quaerat placeat maxime rem sint cumque temporibus vero neque amet nostrum iste ad autem enim incidunt optio dolore quis eius fugit excepturi? Minus, aliquid, obcaecati, facilis, iste facere tempora recusandae voluptatem laboriosam maxime eligendi id explicabo neque expedita iure fuga. Cum, pariatur, laborum!
+</p>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, recusandae mollitia qui laudantium illum corrupti quidem provident necessitatibus soluta quo eos repudiandae? Molestias, ea, eveniet nihil tempora quidem quis dolorem excepturi nemo aliquam quasi cupiditate provident dolores delectus ullam minus quam exercitationem quod ducimus molestiae optio soluta maxime blanditiis! Tenetur, reprehenderit, animi, quasi eum dignissimos vel beatae quaerat placeat maxime rem sint cumque temporibus vero neque amet nostrum iste ad autem enim incidunt optio dolore quis eius fugit excepturi? Minus, aliquid, obcaecati, facilis, iste facere tempora recusandae voluptatem laboriosam maxime eligendi id explicabo neque expedita iure fuga. Cum, pariatur, laborum!
+</p>
+<iframe id='uModalWnd-iframe' src="./window.html" frameborder="0" style="position: fixed;*position: absolute;right: 0;bottom: 0;width: 603px;height: 390px;overflow: hidden;-webkit-transition: height .25s .05s ease-out;-moz-transition: height .25s .05s ease-out;-o-transition: height .25s .05s ease-out;transition: height .25s .05s ease-out;" allowTransparency="true"></iframe>
 </body>
 </html>

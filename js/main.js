@@ -161,8 +161,8 @@ window.uModalWnd = (function(){
 					var root = $(this).parents('.js-uModalWnd__fake-select');
 					$(this).parent().siblings('li').removeClass('fs-option-active');
 					$(this).parent().addClass('fs-option-active');
-					root.removeClass('uModalWnd__fs-opened');
 					root.find('.uModalWnd__fs-val').text($(this).text());
+					setTimeout(function() {root.removeClass('uModalWnd__fs-opened');}, 100);
 				}
 			});
 			$('#js-uModalWnd__close').click(function(e) {
@@ -170,11 +170,11 @@ window.uModalWnd = (function(){
 				app.closeWindow();
 			});
 
-			app.allQuestions.find('input[type=radio]').change(function() {
-				console.log('test');
-				if($(this).prop('checked')) {
-					$(this).parents('li').siblings().find('input').removeClass('checked');
-					$(this).addClass('checked');
+			app.allQuestions.find('label').click(function() {
+				var radio = $(this).find('[type=radio]');
+				if(radio.prop('checked')) {
+					$(this).parents('li').siblings().find('[type=radio]').removeClass('checked');
+					radio.addClass('checked');
 				}
 				else {
 					$(this).removeClass('checked');
