@@ -23,7 +23,7 @@ window.___upoll_data = {
 				"text": "Автомобили",
 				"id": 1
 			}, {
-				"text": "Супер пупер длинное название",
+				"text": "Супер пупер мега длинное название",
 				"id": 2
 			}, {
 				"text": "Спорт",
@@ -115,11 +115,11 @@ window.uModalWnd = (function(){
 				questionBuffer = '';
 				var answerVariants = '', curVariant = '';
 				if (currQuestion.type === 'select') {
+					answerVariants += '<option value="none">' + currQuestion.sign + '</option>';
 					for (var j = 0, aLen = currQuestion.answers.length; j < aLen; j += 1) {
-						answerVariants += '<li><label><input type="radio" name="uModalWnd__answer__' + currQuestion.id + '" value="' + currQuestion.answers[j].id + '" />' + currQuestion.answers[j].text + '</label></li>';
+						answerVariants += '<option value="' + currQuestion.answers[j].id + '">' + currQuestion.answers[j].text + '</option>';
 					}
-					questionBuffer = '<ul class="uModalWnd__answers uModalWnd__answers--select">' + answerVariants + '</ul>';
-					questionBuffer = '<div class="uModalWnd__fake-select-wrap js-uModalWnd__fake-select"><span class="uModalWnd__fs-val">' + currQuestion.sign + '</span>' + questionBuffer + '</div>';
+					questionBuffer = '<select name="uModalWnd__answer__' + currQuestion.id + '" class="uModalWnd__answers--select">' + answerVariants + '</select>';
 				}
 				else {
 					for (var j = 0, aLen = currQuestion.answers.length; j < aLen; j += 1) {
@@ -152,19 +152,7 @@ window.uModalWnd = (function(){
 				}
 				else {}
 			});
-			var fakeSelect = app.allQuestions.find('.js-uModalWnd__fake-select');
-			fakeSelect.find('.uModalWnd__fs-val').click(function(e) {
-				$(this).parent().toggleClass('uModalWnd__fs-opened');
-			});
-			fakeSelect.find('label').click(function(e) {
-				if (!$(this).parent().hasClass('fs-option-active')) {
-					var root = $(this).parents('.js-uModalWnd__fake-select');
-					$(this).parent().siblings('li').removeClass('fs-option-active');
-					$(this).parent().addClass('fs-option-active');
-					root.find('.uModalWnd__fs-val').text($(this).text());
-					setTimeout(function() {root.removeClass('uModalWnd__fs-opened');}, 100);
-				}
-			});
+			
 			$('#js-uModalWnd__close').click(function(e) {
 				app.sendResult(app.result);
 				app.closeWindow();
@@ -183,9 +171,10 @@ window.uModalWnd = (function(){
 		},
 
 		addStepToResult: function() {
-			var stepResult = [], comma = '';
+			var stepResult = [];
 			var selected = app.allQuestions.find('[name=uModalWnd__answer__' + app.pollJSON.poll.poll_questions[app.currStep - 1].id + ']:checked');
-			if (selected.length && !(app.sending)) {
+			if (!selected.length) {selected = app.allQuestions.find('select[name=uModalWnd__answer__' + app.pollJSON.poll.poll_questions[app.currStep - 1].id + ']')}			
+			if (selected.length && !(selected.val() === 'none') && !(app.sending)) {
 				selected.each(function(i) {
 					stepResult.push($(this).val());
 				});
